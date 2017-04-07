@@ -1,0 +1,8 @@
+clear
+
+srcFiles = dir('Image-Data\tsukuba\*.ppm');
+for i = 1 : length(srcfiles)
+  filename = strcat('E:\New Folder\',srcFiles(i).name);
+  I = dicomread(filename);
+  figure, imshow(I);
+end

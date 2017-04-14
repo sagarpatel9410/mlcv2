@@ -6,13 +6,13 @@ for i = 1:length(srcFiles)
   directory = strcat('Image-Data\tsukuba\', srcFiles(i).name);
   images{i} = imread(directory);
 
-  %convert image to grayscale
-  images{i} = rgb2gray(images{i});
 end
 
-  points = cornerPoints(harrisCalculate(images{1},0.01));
-  imshow(images{1})
-  hold on
-  plot(points);
-  
-  
+
+[y,x] = harrisCalculate(rgb2gray(images{1}),0.01);
+points = cornerPoints([x,y]);
+imshow(images{1})
+hold on
+plot(points);
+
+findDescriptors(rgb2gray(images{1}), y, x)

@@ -1,4 +1,4 @@
-function loc = harrisCalculate(I, quality)
+function [r,c] = harrisCalculate(I, quality)
 
 I = im2single(I);
 
@@ -40,6 +40,6 @@ location(:, 1) = 0;
 location(:, end) = 0;
     
 %Find Location of interest points
-idx = find(location);
-[loc(:, 2), loc(:, 1)] = ind2sub(size(location), idx);
+[r,c] = find(location);
+
 end

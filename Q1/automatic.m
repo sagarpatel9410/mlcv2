@@ -9,10 +9,10 @@ for i = 1:length(srcFiles)
   %convert image to grayscale
   images{i} = rgb2gray(images{i});
 end
-% 
-%   points = cornerPoints(harris(images{1},0.04,0.01));
-%   imshow(images{1})
-%   hold on
-%   plot(points);
+
+  points = cornerPoints(harrisCalculate(images{1},0.01));
+  imshow(images{1})
+  hold on
+  plot(points);
   
   

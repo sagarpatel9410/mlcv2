@@ -1,12 +1,10 @@
 function [r,c] = harrisCalculate(I, quality)
 
-I = im2single(I);
-
 %Calculate derivatives of image
-x_mask = repmat([-1 0 1], 3,1);
+x_mask = [-1 0 1];
 y_mask = x_mask';
-A = conv2(I, x_mask, 'same');
-B = conv2(I, y_mask, 'same');
+A = imfilter(I,x_mask,'replicate','same','conv');
+B = imfilter(I,y_mask,'replicate','same','conv');
 
 %Remove Uneceesary gradients at border
 A = A(2:end-1,2:end-1);
@@ -18,12 +16,18 @@ A = A .* A;
 B = B .* B;
 
 %Applying blur
-% blur =  [0.03 0.105 0.222 0.286 0.222 0.105 0.03];
-blur = fspecial('gaussian', 5,5/3);
+blur =  [0.03 0.105 0.222 0.286 0.222 0.105 0.03];
+%blur = fspecial('gaussian', 5,5/3);
 
-A = conv2(A, blur, 'same');
-B = conv2(B, blur, 'same');
-C = conv2(C, blur, 'same');
+A = imfilter(A,blur,'replicate','full','conv');
+B = imfilter(B,blur,'replicate','full','conv');
+C = imfilter(C,blur,'replicate','full','conv');
+
+% Clip to image size
+removed = max(0, (size(blur,1)-1) / 2 - 1);
+A = A(removed+1:end-removed,removed+1:end-removed);
+B = B(removed+1:end-removed,removed+1:end-removed);
+C = C(removed+1:end-removed,removed+1:end-removed);
 
 %Calculate Harris
 k = 0.04; 

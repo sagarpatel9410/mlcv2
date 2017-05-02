@@ -17,7 +17,6 @@ B = B .* B;
 
 %Applying blur
 blur =  [0.03 0.105 0.222 0.286 0.222 0.105 0.03];
-%blur = fspecial('gaussian', 5,5/3);
 
 A = imfilter(A,blur,'replicate','full','conv');
 B = imfilter(B,blur,'replicate','full','conv');

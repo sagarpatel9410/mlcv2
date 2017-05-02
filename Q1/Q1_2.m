@@ -9,18 +9,18 @@ end
 
 %Load 2 images 
 IA = images{1};
-grayIA = double(rgb2gray(IA));
+grayIA = im2single(rgb2gray(IA));
 
 IB = images{2};
-grayIB = double(rgb2gray(IB));
+grayIB = im2single(rgb2gray(IB));
 
 %Detect Features using Harris corner detection
 
-% [yA,xA] = harrisCalculate(grayIA,0.01);
-% harrisA = cornerPoints([xA,yA]);
-% 
-% [yB,xB] = harrisCalculate(grayIB,0.01);
-% harrisB = cornerPoints([xB,yB]);
+[yA,xA] = harrisCalculate(grayIA,0.01);
+harrisA = cornerPoints([xA,yA]);
+
+[yB,xB] = harrisCalculate(grayIB,0.01);
+harrisB = cornerPoints([xB,yB]);
 
 harrisA = detectHarrisFeatures(grayIA);
 harrisB = detectHarrisFeatures(grayIB);
@@ -34,10 +34,8 @@ descriptorsA = hist(patchA',255)';
 descriptorsB = hist(patchB',255)';
 
 %Match Features
-%correspondance = nearestNeighbourMatching(descriptorsA,descriptorsB);
-correspondance = matchFeatures(descriptorsA,descriptorsB,'MatchThreshold',100);
+correspondance = nearestNeighbourMatching(descriptorsA,descriptorsB);
 matchedPoints1 = validPointsA(correspondance(:,1),:);
 matchedPoints2 = validPointsB(correspondance(:,2),:);
 showMatchedFeatures(IA,IB,matchedPoints1,matchedPoints2);
-
 
